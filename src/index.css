@@ -1,17 +1,198 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.genericScreen {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffeaea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  @media (width <= 600px) {
+    width: 75%;
+  }
+}
+
+.formGeneric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  padding-bottom: 1%;
+  background-color: white;
+  border-radius: 24px;
+  @media (width <= 600px) {
+    width: 75%;
+  }
+}
+
+.formLoaderContainer {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.formLoader {
+  font-size: 2rem;
+  width: auto;
+  animation-name: spin;
+  animation-duration: 5000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  opacity: 1;
+  padding: 1% 0;
+}
+
+.formControlsOptions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  opacity: 1;
+  padding: 1% 0;
+  @media (width <= 600px) {
+    height: 10vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
+.saveBtn {
+  margin: 0 1%;
+  padding: 4px 1%;
+  height: 4vh;
+  width: 10vw;
+  background-color: #0d6efd;
+  border-radius: 16px;
+  border-color: black;
+  border-style: solid;
+  cursor: pointer;
+  @media (width <= 600px) {
+    width: 50vw;
+  }
+}
+
+.cancelBtn {
+  margin: 0 1%;
+  padding: 4px 1%;
+  height: 4vh;
+  width: 10vw;
+  background-color: red;
+  border-color: black;
+  border-radius: 16px;
+  border-style: solid;
+  cursor: pointer;
+  @media (width <= 600px) {
+    width: 50vw;
+  }
+}
+
+.controlContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 1%;
+  width: 50%;
+  @media (width <= 600px) {
+    width: 75%;
+  }
+}
+
+.inputSecundaryContainer {
+  width: 100%;
+}
+
+.inputPassSecundaryContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.textInput {
+  background-color: white;
+  width: 100%;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid;
+  border-color: gray;
+  border-radius: 16px;
+}
+
+.passwordInput {
+  background-color: white;
+  width: 95%;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid;
+  border-color: gray;
+  border-radius: 16px;
+}
+
+.passwordToogleInput {
+  cursor: pointer;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.formControlLabel {
+  width: auto;
+  padding: 1% 0;
+  color: rgba(0, 0, 0, 1);
+}
+
+.formControlLabelContainer {
+  width: calc(fit-content() + 100px);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.formMessageContainer {
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
 }
