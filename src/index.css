@@ -44,6 +44,30 @@ code {
   }
 }
 
+.detailTitleContainer {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  @media (width <= 600px) {
+    width: 75%;
+  }
+}
+
+.detailGenericContainer {
+  padding-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75%;
+  padding-bottom: 1%;
+  background-color: white;
+  border-radius: 24px;
+  @media (width <= 600px) {
+    width: 75%;
+  }
+}
+
 .formLoaderContainer {
   width: 75%;
   display: flex;
@@ -186,6 +210,128 @@ code {
   width: 75%;
   display: flex;
   justify-content: center;
+}
+
+.landingShiftContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dTable {
+  width: fit-content;
+  max-width: 75%;
+  max-height: 350px;
+  overflow: scroll;
+  display: block
+}
+
+.dTableWide {
+  /* width: fit-content; */
+  min-width: 75%;
+}
+
+.dTableHeader {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  width: fit-content;
+  background-color: #3F82DB;
+  color: #000000;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 0;
+}
+
+.dTableHeaderItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
+  word-break: break-all;
+  border: solid;
+  border-width: 1px;
+  min-width: 100px;
+  max-width: 500px;
+  flex-basis: 100%;
+}
+
+.dTableHeaderStartItem {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 0px;
+}
+
+.dTableHeaderEndItem {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 16px;
+}
+
+.dTableRows {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  width: fit-content;
+  color: #000000;
+  padding: 0;
+}
+
+.dTableRowItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-align: center;
+  border: solid;
+  min-width: 100px;
+  max-width: 500px;
+  border-width: 1px;
+  flex-basis: 100%;
+}
+
+.dTableRow0Screen {
+  background-color: #FFEAEA;
+}
+
+.dTableRow1Screen {
+  background-color: #F5CBCB;
+}
+
+.dTableRow0Print {
+  background-color: #FFFFFF;
+}
+
+.dTableRow1Print {
+  background-color: #D4D4D4;
+}
+
+.ActionContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.ActionItem {
+    cursor: pointer;
+}
+
+.shiftBtn {
+  margin: 0 1%;
+  padding: 4px 1%;
+  height: 10vh;
+  width: 10vw;
+  background-color: #0d6efd;
+  border-radius: 16px;
+  border-color: black;
+  border-style: solid;
+  cursor: pointer;
+  @media (width <= 600px) {
+    width: 50vw;
+  }
 }
 
 @keyframes spin {
