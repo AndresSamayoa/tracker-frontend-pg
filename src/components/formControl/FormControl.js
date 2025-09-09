@@ -1,4 +1,6 @@
 import { useState } from "react";
+import AsyncSelect  from 'react-select/async';
+
 
 export default function FormControl(props) {
       const [passType, setPassType] = useState('password');
@@ -29,6 +31,20 @@ export default function FormControl(props) {
           </div>
           <div className="inputSecundaryContainer">
               <input className="textInput" type={passType} value={props.value} onChange={props.setValue}/>
+          </div>
+      </div>
+    case 'checkbox':
+      return <div className="controlContainer">
+          <span className="formControlLabel">{props.label}</span>
+          <div className="inputSecundaryContainer">
+              <input type="checkbox" className="textInput" checked={props.value} onChange={props.setValue}/>
+          </div>
+      </div>
+    case 'async-searcher':
+      return <div className="controlContainer">
+          <span className="formControlLabel">{props.label}</span>
+          <div className="inputSecundaryContainer">
+              <AsyncSelect loadOptions={props.selectSearcher} value={props.value} onChange={props.setValue} />
           </div>
       </div>
     default:

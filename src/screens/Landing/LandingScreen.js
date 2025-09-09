@@ -145,6 +145,11 @@ export default function LoginScreen() {
         setShiftStart(response.data.start_date);
         setShiftEnd(response.data.end_date);
         setFetching(false);
+      } else if (response.status === 404) {
+        setShiftId(null);
+        setShiftStart(null);
+        setShiftEnd(null);
+        setFetching(false);
       } else {
         console.log(response.data)
         setFetching(false);

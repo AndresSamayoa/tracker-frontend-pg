@@ -6,6 +6,8 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 const Landing = lazy(()=> import('./screens/Landing/LandingScreen'))
+const Header = lazy(()=> import('./components/Header/Header'))
+const WorkflowsScreen = lazy(()=> import('./screens/Workflows/WorkflowsScreen'))
 
 function App() {
   const session = localStorage.getItem('token');
@@ -13,8 +15,10 @@ function App() {
   if (session) {
     return (<>
       <Suspense fallback={<div class="loading">Loading&#8230;</div>}>
+      <Header />
       <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='/workflows/crud' element={<WorkflowsScreen />} />
         </Routes>
       </Suspense>
     </>);
