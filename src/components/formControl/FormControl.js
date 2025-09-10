@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AsyncSelect  from 'react-select/async';
+import Select  from 'react-select';
 
 
 export default function FormControl(props) {
@@ -12,6 +13,13 @@ export default function FormControl(props) {
           <span className="formControlLabel">{props.label}</span>
           <div className="inputSecundaryContainer">
               <input className="textInput" value={props.value} onChange={props.setValue}/>
+          </div>
+      </div>
+    case 'textArea':
+      return <div className="controlContainer">
+          <span className="formControlLabel">{props.label}</span>
+          <div className="inputSecundaryContainer">
+              <textarea className="textFieldInput" value={props.value} onChange={props.setValue}/>
           </div>
       </div>
     case 'password':
@@ -38,6 +46,13 @@ export default function FormControl(props) {
           <span className="formControlLabel">{props.label}</span>
           <div className="inputSecundaryContainer">
               <input type="checkbox" className="textInput" checked={props.value} onChange={props.setValue}/>
+          </div>
+      </div>
+    case 'searcher':
+      return <div className="controlContainer">
+          <span className="formControlLabel">{props.label}</span>
+          <div className="inputSecundaryContainer">
+              <Select value={props.value} onChange={props.setValue} options={props.options} />
           </div>
       </div>
     case 'async-searcher':

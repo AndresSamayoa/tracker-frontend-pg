@@ -25,7 +25,7 @@ export default function loginForm(props) {
         </div>
         <div className="formControlsOptions">
             <button className="saveBtn" disabled={props.fetching} onClick={props.guardarFn}><i className="bi bi-box-arrow-in-right"></i></button>
-            <button className="cancelBtn" disabled={props.fetching} onClick={props.cancelarFn}><i class="bi bi-x-lg"></i></button>
+            <button className="cancelBtn" disabled={props.fetching} onClick={props.cancelarFn}><i className="bi bi-x-lg"></i></button>
         </div>
     </div>
 };

@@ -9,7 +9,6 @@ export default function Header () {
 
   const getData = async () => {
     try {
-      console.log('Peticion')
       const response = await HttpPetition({
         url: base_url + `/api/v1/users/permissions/user/${localStorage.getItem('userId')}`,
         method: "GET",

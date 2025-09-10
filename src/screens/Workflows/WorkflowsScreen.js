@@ -1,10 +1,10 @@
 import HttpPetition from "../../helpers/HttpPetition";
 import WorkflowForm from "../../components/forms/workflow/WorkflowForm";
+import TableModal from "../../components/TableModal/TableModal";
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from 'react-modal';
-import TableModal from "../../components/TableModal/TableModal";
 
 const base_url = process.env.REACT_APP_NODE_API_BASE;
 
