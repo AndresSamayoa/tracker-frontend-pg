@@ -38,6 +38,7 @@ export default function Header () {
     </div>
     <div className='headerLinks'>
       {areas.includes('workflows') && <Link to='/workflows/crud' className='headerLink'><b>Flujos</b></Link>}
+      {areas.includes('users') && <Link to='/users/crud' className='headerLink'><b>Usuarios</b></Link>}
     </div>
   </div>
 }

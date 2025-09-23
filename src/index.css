@@ -45,6 +45,13 @@ code {
   flex-wrap: wrap;
 }
 
+.headerLink {
+  margin-left: 1%;
+  font-size: 100%;
+  color: #000000;
+  text-decoration: none;
+}
+
 .genericScreen {
   width: 100%;
   min-height: 100vh;

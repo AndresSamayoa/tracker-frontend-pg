@@ -9,6 +9,8 @@ const Landing = lazy(()=> import('./screens/Landing/LandingScreen'))
 const Header = lazy(()=> import('./components/Header/Header'))
 const WorkflowsScreen = lazy(()=> import('./screens/Workflows/WorkflowsScreen'))
 const WorkflowStepsScreen = lazy(()=> import('./screens/WorkflowSteps/WorkflowStepsScreen'))
+const UsersScreen = lazy(()=> import('./screens/Users/UsersScreen'))
+const UserPermissionsScreen = lazy(()=> import('./screens/UserPermissions/UserPermissionsScreen'))
 
 function App() {
   const session = localStorage.getItem('token');
@@ -21,6 +23,8 @@ function App() {
           <Route path='/' element={<Landing />} />
           <Route path='/workflows/crud' element={<WorkflowsScreen />} />
           <Route path='/workflow_steps/crud/:workflowId' element={<WorkflowStepsScreen />} />
+          <Route path='/users/crud' element={<UsersScreen />} />
+          <Route path='/permissions/crud/:userId' element={<UserPermissionsScreen />} />
         </Routes>
       </Suspense>
     </>);
