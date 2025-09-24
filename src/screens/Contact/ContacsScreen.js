@@ -1,35 +1,28 @@
 import HttpPetition from "../../helpers/HttpPetition";
-import UserForm from "../../components/forms/user/UserForm";
+import ContactForm from "../../components/forms/contact/ContactForm";
 import TableModal from "../../components/TableModal/TableModal";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Modal from 'react-modal';
 
 const base_url = process.env.REACT_APP_NODE_API_BASE;
 
-export default function UserScreen() {
+export default function ContactScreen() {
   Modal.setAppElement('#root');
 
   const tableColumns = [
     {field: 'names', text: 'Nombre'},
-    {field: 'text_active', text: 'Activo'},
     {field: 'phone', text: 'Telefono'},
     {field: 'email', text: 'Email'},
-    {field: 'supervisor_names', text: 'Supervisor'},
     {field: 'actions', text: 'Acciones'}
   ];
 
   const cancelForm = () => {
     console.log("Limpio");
-    setUserId(null)
+    setContactId(null)
     setNames("");
     setPhone("");
     setEmail("");
-    setPassword("");
-    setActive(false);
-    setAdmin(false);
-    setUser(null);
     setMessage('');
   };
 
@@ -37,11 +30,11 @@ export default function UserScreen() {
     try {
       let url ;
       let method ;
-      if (userId > 0) {
-        url = base_url + "/api/v1/users/" + userId;
+      if (contactId > 0) {
+        url = base_url + "/api/v1/contacts/" + contactId;
         method = 'PUT';
       } else {
-        url = base_url + "/api/v1/users";
+        url = base_url + "/api/v1/contacts";
         method = 'POST';
       }
       if (fetching) {
@@ -54,19 +47,10 @@ export default function UserScreen() {
         errores.push("El nombre es un campo obligatorio.");
       }
       if (!phone || phone.trim().length < 1) {
-        errores.push("La descripcion es un campo obligatorio.");
+        errores.push("El telefono es un campo obligatorio.");
       }
       if (!email || !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email.trim()))) {
         errores.push("El email debe tener un formato valido (xxx@xx.xx).");
-      }
-      if (userId < 1 && (!password || password.length <= 7)) {
-        errores.push("La clave debe de tener al menos 8 caracteres.");
-      }
-      if (typeof active != 'boolean') {
-        errores.push("Debe seleccionar si el usuario esta activo.");
-      }
-      if (typeof admin != 'boolean') {
-        errores.push("Debe seleccionar si el usuario es administrador.");
       }
 
       if (errores.length > 0) {
@@ -80,13 +64,9 @@ export default function UserScreen() {
         url: url,
         method: method,
         data: {
-          names: names.trim(),
-          phone: phone,
+          name: names.trim(),
+          phone: phone.trim(),
           email: email,
-          password: password || null,
-          active: active,
-          admin: admin,
-          user_id: user ? user.value : null
         },
         validateStatus: () => true,
       });
@@ -94,7 +74,7 @@ export default function UserScreen() {
       if (response.status === 200) {
         cancelForm();
         setFetching(false)
-        setMessage("Usuario guardado");
+        setMessage("Contacto guardado");
       } else {
         setMessage(
           `No se pudo iniciar guardar, codigo: ${response.status}${
@@ -109,10 +89,10 @@ export default function UserScreen() {
     }
   };
 
-  const deleteItem = async (user_id, searcher, setMensajeParam) => {
+  const deleteItem = async (contact_id, searcher, setMensajeParam) => {
     try {
       const response = await HttpPetition({
-        url: base_url + '/api/v1/users/'+user_id,
+        url: base_url + '/api/v1/contacts/'+contact_id,
         method: 'DELETE',
         validateStatus: () => true
       });
@@ -125,14 +105,14 @@ export default function UserScreen() {
         setMensajeParam(`'Error al eliminar, codigo: ${response.status}${response.data.message ? ' ' + response.data.message : ''}`);
       }
     } catch (error) {
-      setMensajeParam('Error al eliminar la cita: ' + error.message);
+      setMensajeParam('Error al eliminar el contacto: ' + error.message);
     }
   };
 
    const searchData = async (searcher, setMensajeParam) => {
       try {
         const response = await HttpPetition({
-          url: base_url+'/api/v1/users/search/'+searcher,
+          url: base_url+'/api/v1/contacts/search/'+searcher,
           method: 'GET',
           validateStatus: () => true,
           timeout: 30000
@@ -140,37 +120,28 @@ export default function UserScreen() {
 
         if (response.status === 200) {
           const data = [];
-          for (const userData of response.data) {
+          for (const contact of response.data) {
             data.push({
-                names: userData.names,
-                text_active: userData.active ? 'Si' : 'No',
-                phone: userData.phone,
-                email: userData.email,
-                supervisor_names: userData.supervisor_names || 'N/A',
+                names: contact.names,
+                phone: contact.phone,
+                email: contact.email,
+                supervisor_names: contact.supervisor_names || 'N/A',
                 actions: <div className='ActionContainer'>
                     <i 
                       onClick={()=>{
-                        setUserId(userData.user_id)
-                        setNames(userData.names)
-                        setPhone(userData.phone)
-                        setEmail(userData.email)
-                        setActive(userData.active)
-                        setPassword('')
-                        setAdmin(userData.admin)
-                        setUser(userData.supervisor_id > 0 ? {value: userData.supervisor_id, label: userData.supervisor_names} : null)
+                        setContactId(contact.user_id)
+                        setNames(contact.names)
+                        setPhone(contact.phone)
+                        setEmail(contact.email)
                         setIsTableModalOpen(false);
                       }} 
                       class="bi bi-pencil-square ActionItem"
                     ></i>
                     <i
-                      onClick={()=>deleteItem(userData.user_id, searcher, setMensajeParam)} 
+                      onClick={()=>deleteItem(contact.contact_id, searcher, setMensajeParam)} 
                       style={{color:"red"}} 
                       class="bi bi-trash ActionItem"
                     ></i>
-                    <Link to={'/permissions/crud/'+userData.user_id}> <i
-                      style={{color:"blue"}} 
-                      class="bi bi-eye ActionItem"
-                    ></i> </Link>
                 </div>
             });
           }
@@ -186,53 +157,14 @@ export default function UserScreen() {
       }
   }
 
-  const searchUser = async (param) => {
-    try {
-      const response = await HttpPetition({
-        url: base_url+'/api/v1/users/search/'+param,
-        method: 'GET',
-        validateStatus: () => true,
-        timeout: 30000
-      });
-
-      if (response.status === 200) {
-        console.log(response.data)
-        const data = [];
-        for (const user of response.data) {
-          data.push({
-            value: user.user_id,
-            label: user.names,
-          });
-        }
-
-        setFetching(false);
-        return data;
-      } else if (response.status === 404) {
-        setFetching(false);
-        return []
-      } else {
-        setMessage(`Error al obtener los datos de usuarios, codigo: ${response.status}${response.data.message ? ' ' + response.data.message : ''}`);
-        setFetching(false);
-      }
-    } catch (error) {
-      setMessage("Error al buscar el usuario: " + error.message);
-      setFetching(false);
-      return []
-    }
-  };
-
   const cerrarModalTabla = () => {
     setIsTableModalOpen(false);
   };
 
-  const [userId, setUserId] = useState(0);
+  const [contactId, setContactId] = useState(0);
   const [names, setNames] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [active, setActive] = useState(true);
-  const [admin, setAdmin] = useState(false);
-  const [user, setUser] = useState(null);
   const [fetching, setFetching] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [isTableModalOpen, setIsTableModalOpen] = useState(false);
@@ -241,27 +173,18 @@ export default function UserScreen() {
   return (
     <div className="genericScreen">
       <div className="titleContainer">
-        <h1>Usuarios</h1>
+        <h1>Contactos</h1>
         <i class="bi bi-search openModal" onClick={()=> setIsTableModalOpen(true)}/>
       </div>
-      <UserForm
+      <ContactForm
         cancelarFn={cancelForm}
         guardarFn={saveForm}
         setNames={setNames}
         setPhone={setPhone}
         setEmail={setEmail}
-        setPassword={setPassword}
-        setActive={setActive}
-        setAdmin={setAdmin}
-        setSupervisor={setUser}
-        searchSupervisor={searchUser}
         names={names}
         phone={phone}
         email={email}
-        password={password}
-        active={active}
-        admin={admin}
-        supervisor={user}
         fetching={fetching}
         message={message}
       />
@@ -278,7 +201,7 @@ export default function UserScreen() {
                 setTableData={setTableData}
                 searchData={searchData}
 
-                placeHolder='Nombre o email de usuario.'
+                placeHolder='Nombre o email de contacto.'
                 tableColumns={tableColumns}
                 tableData={tableData}
             />

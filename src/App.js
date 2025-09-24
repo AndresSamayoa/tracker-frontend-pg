@@ -11,6 +11,8 @@ const WorkflowsScreen = lazy(()=> import('./screens/Workflows/WorkflowsScreen'))
 const WorkflowStepsScreen = lazy(()=> import('./screens/WorkflowSteps/WorkflowStepsScreen'))
 const UsersScreen = lazy(()=> import('./screens/Users/UsersScreen'))
 const UserPermissionsScreen = lazy(()=> import('./screens/UserPermissions/UserPermissionsScreen'))
+const ContactScreen = lazy(()=> import('./screens/Contact/ContacsScreen'))
+const DelaysScreen = lazy(()=> import('./screens/Delay/DelaysScreen'))
 
 function App() {
   const session = localStorage.getItem('token');
@@ -25,6 +27,8 @@ function App() {
           <Route path='/workflow_steps/crud/:workflowId' element={<WorkflowStepsScreen />} />
           <Route path='/users/crud' element={<UsersScreen />} />
           <Route path='/permissions/crud/:userId' element={<UserPermissionsScreen />} />
+          <Route path='/contacts/crud' element={<ContactScreen />} />
+          <Route path='/delays/crud' element={<DelaysScreen />} />
         </Routes>
       </Suspense>
     </>);
