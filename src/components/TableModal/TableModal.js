@@ -6,7 +6,12 @@ import Searcher from '../../components/Searcher/Searcher';
 export default function TableModal (props) {
 
     const [searcher, setSearcher] = useState('');
+    const [paramType, setParamType] = useState('');
     const [message, setMessage] = useState('');
+
+    let search = ()=> props.searchData(searcher, setMessage);
+    if (props.useType) search = ()=>  props.searchData(searcher, paramType, setMessage);
+
 
     const cerrarModal = () => {
         props.closeModal();
@@ -21,12 +26,18 @@ export default function TableModal (props) {
             <i onClick={cerrarModal} class="bi bi-x closeIcon" />
         </div>
         <Searcher 
-            placeHolder={props.placeHolder}
+            useType={props.useType}
 
+            typeLabel={props.typeLabel}
+            typeValue={paramType}
+            setTypeValue={setParamType}
+            types={props.types}
+
+            placeHolder={props.placeHolder}
             param={searcher}
             setParam={setSearcher}
 
-            searchFn={() => props.searchData(searcher, setMessage)}
+            searchFn={search}
             cancelFn={clearTableData}
         />
         <p>{message}</p>

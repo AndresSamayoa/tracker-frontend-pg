@@ -41,6 +41,7 @@ export default function Header () {
       {areas.includes('users') && <Link to='/users/crud' className='headerLink'><b>Usuarios</b></Link>}
       {areas.includes('contacts') && <Link to='/contacts/crud' className='headerLink'><b>Contactos</b></Link>}
       {areas.includes('delays') && <Link to='/delays/crud' className='headerLink'><b>Atrasos</b></Link>}
+      {areas.includes('orders') && <Link to='/orders/crud' className='headerLink'><b>Ordenes</b></Link>}
     </div>
   </div>
 }

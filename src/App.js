@@ -13,6 +13,8 @@ const UsersScreen = lazy(()=> import('./screens/Users/UsersScreen'))
 const UserPermissionsScreen = lazy(()=> import('./screens/UserPermissions/UserPermissionsScreen'))
 const ContactScreen = lazy(()=> import('./screens/Contact/ContacsScreen'))
 const DelaysScreen = lazy(()=> import('./screens/Delay/DelaysScreen'))
+const OrdersCrudScreen = lazy(()=> import('./screens/OrdersCrud/OrdersCrudScreen'))
+const OrderDetailScreen = lazy(()=> import('./screens/OrderDetail/OrderDetailScreen'))
 
 function App() {
   const session = localStorage.getItem('token');
@@ -29,6 +31,8 @@ function App() {
           <Route path='/permissions/crud/:userId' element={<UserPermissionsScreen />} />
           <Route path='/contacts/crud' element={<ContactScreen />} />
           <Route path='/delays/crud' element={<DelaysScreen />} />
+          <Route path='/orders/crud' element={<OrdersCrudScreen />} />
+          <Route path='/order/:orderId/detail' element={<OrderDetailScreen />} />
         </Routes>
       </Suspense>
     </>);
