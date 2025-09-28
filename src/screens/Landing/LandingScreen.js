@@ -68,7 +68,7 @@ export default function LoginScreen() {
             workflow_name: order.workflow_name,
             comment: order.comment,
             actions: <div className='ActionContainer'>
-                  <Link to={'/order/detail/'+order.order_id}> <i
+                  <Link to={'/order/'+order.order_id+'/detail'}> <i
                                 style={{color:"blue"}} 
                                 class="bi bi-geo-alt ActionItem"
                             ></i>

@@ -16,7 +16,7 @@ export default function workflowForm(props) {
 
     return <div className='formGeneric'>
         <div className="formInputs">
-            <FormControl type="text" label="Name" value={props.name} setValue={setName} />
+            <FormControl type="text" label="Nombre" value={props.name} setValue={setName} />
             <FormControl type="checkbox" label="Activo" value={props.active} setValue={setActive} />
             <FormControl type="text" label="Descripcion" value={props.description} setValue={setDescription} />
             <FormControl type="async-searcher" label="Encargado" value={props.supervisor} setValue={props.setSupervisor} selectSearcher={props.searchSupervisor} />
