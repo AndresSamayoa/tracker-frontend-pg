@@ -34,7 +34,7 @@ export default function Header () {
 
   return <div className='headerContainer'>
     <div className='headerLogoContainer'>
-      <h1 className='headerTitle'>Tracker</h1>
+      <Link to='/' className='headerLink'>Tracker</Link>
     </div>
     <div className='headerLinks'>
       {areas.includes('workflows') && <Link to='/workflows/crud' className='headerLink'><b>Flujos</b></Link>}
@@ -42,6 +42,7 @@ export default function Header () {
       {areas.includes('contacts') && <Link to='/contacts/crud' className='headerLink'><b>Contactos</b></Link>}
       {areas.includes('delays') && <Link to='/delays/crud' className='headerLink'><b>Atrasos</b></Link>}
       {areas.includes('orders') && <Link to='/orders/crud' className='headerLink'><b>Ordenes</b></Link>}
+      {areas.includes('reports') && <Link to='/reports' className='headerLink'><b>Reportes</b></Link>}
     </div>
   </div>
 }

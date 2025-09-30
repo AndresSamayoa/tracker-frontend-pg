@@ -26,7 +26,7 @@ export default function delayForm(props) {
         <div className="formInputs">
             <FormControl type="text" label="Nombre" value={props.name} setValue={setName} />
             <FormControl type="checkbox" label="Activo" value={props.active} setValue={setActive} />
-            <FormControl type="checkbox" label="Envia notificacion?" value={props.notify} setValue={setNotify} />
+            <FormControl type="checkbox" label="Notifica al cliente?" value={props.notify} setValue={setNotify} />
             <FormControl type="checkbox" label="Es error?" value={props.error} setValue={setError} />
             <FormControl type="textArea" label="Descripcion" value={props.description} setValue={setDescription} />
             <FormControl type="async-searcher" label="Supervisor" value={props.supervisor} setValue={props.setSupervisor} selectSearcher={props.searchSupervisor} />

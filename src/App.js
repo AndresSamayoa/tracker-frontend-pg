@@ -15,6 +15,7 @@ const ContactScreen = lazy(()=> import('./screens/Contact/ContacsScreen'))
 const DelaysScreen = lazy(()=> import('./screens/Delay/DelaysScreen'))
 const OrdersCrudScreen = lazy(()=> import('./screens/OrdersCrud/OrdersCrudScreen'))
 const OrderDetailScreen = lazy(()=> import('./screens/OrderDetail/OrderDetailScreen'))
+const ReportsScreen = lazy(()=> import('./screens/Reports/ReportsScreen'))
 
 function App() {
   const session = localStorage.getItem('token');
@@ -33,6 +34,7 @@ function App() {
           <Route path='/delays/crud' element={<DelaysScreen />} />
           <Route path='/orders/crud' element={<OrdersCrudScreen />} />
           <Route path='/order/:orderId/detail' element={<OrderDetailScreen />} />
+          <Route path='/reports' element={<ReportsScreen />} />
         </Routes>
       </Suspense>
     </>);

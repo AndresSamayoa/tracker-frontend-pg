@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Modal from 'react-modal';
 import moment from "moment";
+import StepGuide from "../../components/StepsGuide/StepsGuide";
 
 const base_url = process.env.REACT_APP_NODE_API_BASE;
 
@@ -368,6 +369,7 @@ export default function OrderDetailScreen() {
 
         setUser({id: response.data.user_id, names: response.data.user_names});
         setOrder({id: response.data.order_id, comment: response.data.comment});
+        setWorkflowId(response.data.workflow_id)
         setLastStep(stepsTemp[0]);
         setOrderSteps(stepsTemp);
         setOrderContacts(contactsTemp);
@@ -387,6 +389,11 @@ export default function OrderDetailScreen() {
     setIsTableModalOpen(false);
   };
 
+  const cerrarModalGuia = () => {
+    setIsGuideModalOpen(false);
+  };
+
+  const [workflowId, setWorkflowId] = useState(0);
   const [stepId, setStepId] = useState(0);
   const [comment, setComment] = useState('');
   const [delay, setDelay] = useState(null);
@@ -401,6 +408,7 @@ export default function OrderDetailScreen() {
   const [fetching, setFetching] = useState(false);
   const [message, setMessage] = useState("");
   const [isTableModalOpen, setIsTableModalOpen] = useState(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
   useEffect(()=>{getOrder()}, []);
 
@@ -410,6 +418,7 @@ export default function OrderDetailScreen() {
         <div className="titleContainer">
           <h1>Detalle de orden {orderId}</h1>
         <i class="bi bi-envelope openModal" onClick={()=> setIsTableModalOpen(true)}/>
+        <i class="bi bi-patch-question openModal" onClick={()=> setIsGuideModalOpen(true)}/>
         </div>
         <div className="titleContainer">
           <div>
@@ -470,6 +479,22 @@ export default function OrderDetailScreen() {
           <DataTable 
             headers={contactTableColumns}
             rows={orderContacts}
+          />
+        </div>
+      </Modal>
+      <Modal
+          isOpen={isGuideModalOpen}
+          onRequestClose={cerrarModalGuia}
+          shouldCloseOnEsc={true}
+          shouldCloseOnOverlayClick={true}
+      >
+        <div className="TableModalComponent">
+          <div className='closeModalDiv'>
+              <i onClick={cerrarModalGuia} class="bi bi-x closeIcon" />
+          </div>
+          <h1>Pasos del flujo</h1>
+          <StepGuide
+            workflowId={workflowId}
           />
         </div>
       </Modal>
