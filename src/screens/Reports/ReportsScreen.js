@@ -5,6 +5,7 @@ import OrderStatus from "../../components/reports/ordersStatus/ordersStatus";
 import HttpPetition from "../../helpers/HttpPetition";
 
 import { useState } from 'react';
+import { PieChart, BarChart } from '@mui/x-charts'
 import moment from "moment";
 
 const base_url = process.env.REACT_APP_NODE_API_BASE;
@@ -18,25 +19,29 @@ export default function ReportScreen() {
   const [wfAvgSelected, setWfAvgSelected] = useState(false);
   const [usAvgSelected, setUsAvgSelected] = useState(false);
   const [orderStatusSelected, setOrderStatusSelected] = useState(false);
+  const [pieCharts, setPieCharts] = useState([])
+  const [barCharts, setBarCharts] = useState(null)
 
   const clear = () => {
-    setTableColumns([])
+    setTableColumns([]);
+    setPieCharts([]);
+    setBarCharts(null);
   }
 
   const selectWfAvgSelected = () => {
     setWfAvgSelected(true);
     setUsAvgSelected(false);
     setOrderStatusSelected(false);
-    setTableData([]);
+    clear();
     setTableColumns([
       {field: 'workflow_name', text: 'Flujo'},
       {field: 'average_time', text: 'Tiempo promedio (h)'},
       {field: 'average_time_step', text: 'Tiempo promedio por paso (h)'},
       {field: 'average_time_delay', text: 'Tiempo promedio por atrasos (h)'},
       {field: 'average_time_errors', text: 'Tiempo promedio por error (h)'},
-      {field: 'average_steps', text: 'Numero promedio de pasos'},
-      {field: 'average_delays', text: 'Numero promedio de atrasos por paso'},
-      {field: 'average_errors', text: 'Numero promedio de errores por paso'}
+      {field: 'average_steps', text: 'Porcentaje de pasos exitosos'},
+      {field: 'average_delays', text: 'Porcentaje de atrasos'},
+      {field: 'average_errors', text: 'Porcentaje de errores'}
     ]);
   };
 
@@ -44,16 +49,16 @@ export default function ReportScreen() {
     setUsAvgSelected(true);
     setWfAvgSelected(false);
     setOrderStatusSelected(false);
-    setTableData([]);
+    clear();
     setTableColumns([
       {field: 'user_names', text: 'Usuario'},
       {field: 'average_time', text: 'Tiempo promedio (h)'},
       {field: 'average_time_step', text: 'Tiempo promedio por paso (h)'},
       {field: 'average_time_delay', text: 'Tiempo promedio por atrasos (h)'},
       {field: 'average_time_errors', text: 'Tiempo promedio por error (h)'},
-      {field: 'average_steps', text: 'Numero promedio de pasos'},
-      {field: 'average_delays', text: 'Numero promedio de atrasos por paso'},
-      {field: 'average_errors', text: 'Numero promedio de errores por paso'}
+      {field: 'average_steps', text: 'Porcentaje de pasos exitosos'},
+      {field: 'average_delays', text: 'Porcentaje de atrasos'},
+      {field: 'average_errors', text: 'Porcentaje de errores'}
     ]);
   };
 
@@ -61,7 +66,7 @@ export default function ReportScreen() {
     setOrderStatusSelected(true);
     setWfAvgSelected(false);
     setUsAvgSelected(false);
-    setTableData([]);
+    clear();
     setTableColumns([
       {field: 'order_id', text: 'Numero de orden'},
       {field: 'workflow_name', text: 'Flujo'},
@@ -106,6 +111,8 @@ export default function ReportScreen() {
 
       if (response.status === 200) {
         const rows = [];
+        const pies = [];
+        const barsRows = [];
         for (const row of response.data) {
           rows.push({
             workflow_name: row.workflow_name,
@@ -113,16 +120,61 @@ export default function ReportScreen() {
             average_time_step: Number(row.average_time_step).toFixed(4) + ' h',
             average_time_delay: Number(row.average_time_delay).toFixed(4) + ' h',
             average_time_errors: Number(row.average_time_errors).toFixed(4) + ' h',
-            average_steps: Number(row.average_steps).toFixed(4) + ' por orden',
-            average_delays: Number(row.average_delays).toFixed(4) + ' por paso',
-            average_errors: Number(row.average_errors).toFixed(4) + ' por paso',
+            average_steps: Number(row.average_steps).toFixed(4) + ' %',
+            average_delays: Number(row.average_delays).toFixed(4) + ' %',
+            average_errors: Number(row.average_errors).toFixed(4) + ' %',
+          });
+          pies.push(<>
+            <div className="chartContainer">
+              <p>Resumen de pasos: {row.workflow_name}</p>
+              <PieChart 
+                series={[
+                  {
+                    data: [
+                      { id: 0, value: row.average_steps, label: '% de pasos correctos' },
+                      { id: 1, value: row.average_delays, label: '% de atrasos' },
+                      { id: 2, value: row.average_errors, label: '% de errores' },
+                    ],
+                  },
+                ]}
+                height={100}
+                width={100}
+              />
+            </div>
+            </>
+          );
+          barsRows.push({
+            workflow_name: row.workflow_name,
+            average_time: Number(Number(row.average_time).toFixed(2)),
+            average_time_step: Number(Number(row.average_time_step).toFixed(2)),
+            average_time_delay: Number(Number(row.average_time_delay).toFixed(2)),
+            average_time_errors: Number(Number(row.average_time_errors).toFixed(2))
           });
         }
+
         setFetching(false);
-        setTableData(rows)
+        setTableData(rows);
+        setPieCharts(pies);
+        setBarCharts(
+          <div className="chartContainer">
+            <p>Resumen de tiempos</p>
+            <BarChart
+              dataset={barsRows}
+              series={[
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de flujo', dataKey: 'average_time', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de pasos exitosos', dataKey: 'average_time_step', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de atrasos', dataKey: 'average_time_delay', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de error', dataKey: 'average_time_errors', stack: 'assets' }
+              ]}
+              xAxis={[{ dataKey: 'workflow_name' }]}
+            />
+          </div>
+        );
       } else if (response.status === 404) {
         setFetching(false);
         setTableData([]);
+        setPieCharts([]);
+        setBarCharts(null);
       } else {
         setMessage(
           `No se pudo consultar el reporte, codigo: ${response.status}${
@@ -171,6 +223,8 @@ export default function ReportScreen() {
 
       if (response.status === 200) {
         const rows = [];
+        const pies = [];
+        const barsRows = [];
         for (const row of response.data) {
           rows.push({
             user_names: row.user_names,
@@ -182,12 +236,57 @@ export default function ReportScreen() {
             average_delays: Number(row.average_delays).toFixed(4) + ' por paso',
             average_errors: Number(row.average_errors).toFixed(4) + ' por paso',
           });
+          pies.push(<>
+            <div className="chartContainer">
+              <p>Resumen de pasos: {row.user_names}</p>
+              <PieChart 
+                series={[
+                  {
+                    data: [
+                      { id: 0, value: row.average_steps, label: '% de pasos correctos' },
+                      { id: 1, value: row.average_delays, label: '% de atrasos' },
+                      { id: 2, value: row.average_errors, label: '% de errores' },
+                    ],
+                  },
+                ]}
+                height={100}
+                width={100}
+              />
+            </div>
+            </>
+          );
+          barsRows.push({
+            user_names: row.user_names,
+            average_time: Number(Number(row.average_time).toFixed(2)),
+            average_time_step: Number(Number(row.average_time_step).toFixed(2)),
+            average_time_delay: Number(Number(row.average_time_delay).toFixed(2)),
+            average_time_errors: Number(Number(row.average_time_errors).toFixed(2))
+          });
         }
+
         setFetching(false);
-        setTableData(rows)
+        setTableData(rows);
+        setPieCharts(pies);
+        setBarCharts(
+          <>{barsRows.length > 0 && <div className="chartContainer">
+            <p>Resumen de tiempos</p>
+            <BarChart
+              dataset={barsRows}
+              series={[
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de flujo', dataKey: 'average_time', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de pasos exitosos', dataKey: 'average_time_step', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de atrasos', dataKey: 'average_time_delay', stack: 'assets' },
+                { valueFormatter: (v) => { return v + ' h' }, label: 'Tiempo promedio de error', dataKey: 'average_time_errors', stack: 'assets' }
+              ]}
+              xAxis={[{ dataKey: 'user_names' }]}
+            />
+          </div>}</>
+        );
       } else if (response.status === 404) {
         setFetching(false);
         setTableData([]);
+        setPieCharts([]);
+        setBarCharts(null);
       } else {
         setMessage(
           `No se pudo consultar el reporte, codigo: ${response.status}${
@@ -293,6 +392,8 @@ export default function ReportScreen() {
       fetching={fetching}
       message={message}
     />}
+      <div className="chartsContainer">{pieCharts}</div>
+      <div className="chartsContainer">{barCharts}</div>
       {tableColumns.length > 0 &&<DataTable 
         headers={tableColumns}
         rows={tableData}
