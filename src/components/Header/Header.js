@@ -7,6 +7,18 @@ const base_url = process.env.REACT_APP_NODE_API_BASE;
 
 export default function Header () {
 
+    const logout = () => {
+        HttpPetition({
+            url: base_url + '/api/v1/logout',
+            method: 'DELETE',
+            validateStatus: () => true,
+        });
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        window.location.assign('/')
+    }
+
   const getData = async () => {
     try {
       const response = await HttpPetition({
@@ -43,6 +55,9 @@ export default function Header () {
       {areas.includes('delays') && <Link to='/delays/crud' className='headerLink'><b>Atrasos</b></Link>}
       {areas.includes('orders') && <Link to='/orders/crud' className='headerLink'><b>Ordenes</b></Link>}
       {areas.includes('reports') && <Link to='/reports' className='headerLink'><b>Reportes</b></Link>}
+    </div>
+    <div className='headerLogoContainer'>
+      <p className='headerLink ActionItem' onClick={logout}>Cerrar sesión</p>
     </div>
   </div>
 }
