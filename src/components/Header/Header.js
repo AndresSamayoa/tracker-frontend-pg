@@ -55,6 +55,7 @@ export default function Header () {
       {areas.includes('delays') && <Link to='/delays/crud' className='headerLink'><b>Atrasos</b></Link>}
       {areas.includes('orders') && <Link to='/orders/crud' className='headerLink'><b>Ordenes</b></Link>}
       {areas.includes('reports') && <Link to='/reports' className='headerLink'><b>Reportes</b></Link>}
+      {areas.includes('shifts') && <Link to='/shifts' className='headerLink'><b>Turnos</b></Link>}
     </div>
     <div className='headerLogoContainer'>
       <p className='headerLink ActionItem' onClick={logout}>Cerrar sesión</p>

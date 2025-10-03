@@ -7,10 +7,13 @@ export default function TableModal (props) {
 
     const [searcher, setSearcher] = useState('');
     const [paramType, setParamType] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [message, setMessage] = useState('');
 
     let search = ()=> props.searchData(searcher, setMessage);
     if (props.useType) search = ()=>  props.searchData(searcher, paramType, setMessage);
+    if (props.useDateRange) search = ()=>  props.searchData(searcher, startDate, endDate,setMessage);
 
 
     const cerrarModal = () => {
@@ -27,11 +30,17 @@ export default function TableModal (props) {
         </div>
         <Searcher 
             useType={props.useType}
+            useDateRange={props.useDateRange}
 
             typeLabel={props.typeLabel}
             typeValue={paramType}
             setTypeValue={setParamType}
             types={props.types}
+
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
 
             placeHolder={props.placeHolder}
             param={searcher}

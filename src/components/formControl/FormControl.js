@@ -55,6 +55,13 @@ export default function FormControl(props) {
               <input type="date" className="textInput" value={props.value} onChange={props.setValue}/>
           </div>
       </div>
+    case 'datetime':
+      return <div className="controlContainer">
+          <span className="formControlLabel">{props.label}</span>
+          <div className="inputSecundaryContainer">
+              <input type="datetime-local" className="textInput" value={props.value} onChange={props.setValue}/>
+          </div>
+      </div>
     case 'searcher':
       return <div className="controlContainer">
           <span className="formControlLabel">{props.label}</span>
