@@ -3,7 +3,7 @@ import LoginScreen from './screens/Login/LoginScreen';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 const Landing = lazy(()=> import('./screens/Landing/LandingScreen'))
 const Header = lazy(()=> import('./components/Header/Header'))
@@ -17,11 +17,15 @@ const OrdersCrudScreen = lazy(()=> import('./screens/OrdersCrud/OrdersCrudScreen
 const OrderDetailScreen = lazy(()=> import('./screens/OrderDetail/OrderDetailScreen'))
 const ReportsScreen = lazy(()=> import('./screens/Reports/ReportsScreen'))
 const ShiftsScreen = lazy(()=> import('./screens/Shifts/ShiftsScreen'))
+const TrackerScreen = lazy(()=> import('./screens/Tracker/TrackerScreen'))
 
 function App() {
+  const location = useLocation();
   const session = localStorage.getItem('token');
 
-  if (session) {
+  if(location.pathname === '/tracker') {
+    return <TrackerScreen />
+  } else if (session) {
     return (<>
       <Suspense fallback={<div className="loading">Loading&#8230;</div>}>
       <Header />
@@ -37,6 +41,7 @@ function App() {
           <Route path='/order/:orderId/detail' element={<OrderDetailScreen />} />
           <Route path='/reports' element={<ReportsScreen />} />
           <Route path='/shifts' element={<ShiftsScreen />} />
+          <Route path='/tracker' element={<TrackerScreen />} />
         </Routes>
       </Suspense>
     </>);
