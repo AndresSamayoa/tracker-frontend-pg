@@ -344,8 +344,8 @@ export default function ReportScreen() {
             order_id: row.order_id,
             workflow_name: row.workflow_name,
             user_names: row.user_names,
-            start_date: moment(row.start_date).format('DD-MM-YY hh:mm a'),
-            end_date: row.end_date ? moment(row.end_date).format('DD-MM-YY hh:mm a') : 'N/A',
+            start_date: moment(row.start_date, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YY hh:mm a'),
+            end_date: row.end_date ? moment(row.end_date, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YY hh:mm a') : 'N/A',
             contacts: row.contacts,
           });
         }

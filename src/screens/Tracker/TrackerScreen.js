@@ -61,7 +61,7 @@ export default function TrackerScreen() {
               </div>
               <div className="trackerTextContainer">
                 <h1 className="trackerTitleText">{row.type}: {row.step_name}</h1>
-                <h1 className="trackerDateText">{moment(row.date).format('DD/MM/YYYY hh:mm a')}</h1>
+                <h1 className="trackerDateText">{moment(row.date, 'YYYY-MM-DDThh:mm:ss').format('DD/MM/YYYY hh:mm a')}</h1>
               </div>
             </div>
           );

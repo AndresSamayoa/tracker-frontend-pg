@@ -213,8 +213,8 @@ export default function LoginScreen() {
       <div className='detailGenericContainer'>
         <div className="landingShiftContainer">
           {!shiftId && <button disabled={fetching} className="shiftBtn" onClick={manageShiftStatus}>Iniciar Turno</button>}
-          {shiftId && shiftStart && <h3>Inicio de turno {moment(shiftStart).format('DD-MM-YYYY hh:mm a')}</h3>}
-          {shiftId && shiftEnd && <h3>Fin de turno {moment(shiftEnd).format('DD-MM-YYYY hh:mm a')}</h3>}
+          {shiftId && shiftStart && <h3>Inicio de turno {moment(shiftStart, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YYYY hh:mm a')}</h3>}
+          {shiftId && shiftEnd && <h3>Fin de turno {moment(shiftEnd, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YYYY hh:mm a')}</h3>}
           {shiftId && !shiftEnd && <button className="shiftBtn" disabled={fetching} onClick={manageShiftStatus}>Finalizar turno</button>}
         </div>
         <Loader show={fetching}/>

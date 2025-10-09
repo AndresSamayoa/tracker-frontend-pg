@@ -111,15 +111,15 @@ export default function ShiftsScreen() {
         for (const shift of response.data) {
           data.push({
               user_names: shift.user_names,
-              start_date: moment(shift.start_date).format('DD-MM-YYYY hh:mm a'),
-              end_date: shift.end_date ? moment(shift.end_date).format('DD-MM-YYYY hh:mm a') : 'N/A',
+              start_date: moment(shift.start_date, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YYYY hh:mm a'),
+              end_date: shift.end_date ? moment(shift.end_date, 'YYYY-MM-DDThh:mm:ss').format('DD-MM-YYYY hh:mm a') : 'N/A',
               actions: <div className='ActionContainer'>
                   <i 
                     onClick={()=>{
                       setShiftId(shift.shift_id);
                       setUser({label: shift.user_names, value: shift.user_id});
-                      setStartDate(moment(shift.start_date).format('YYYY-MM-DDThh:mm'));
-                      setEndDate(shift.end_date ? moment(shift.end_date).format('YYYY-MM-DDThh:mm') : '');
+                      setStartDate(moment(shift.start_date, 'YYYY-MM-DDThh:mm:ss').format('YYYY-MM-DDThh:mm'));
+                      setEndDate(shift.end_date ? moment(shift.end_date, 'YYYY-MM-DDThh:mm:ss').format('YYYY-MM-DDThh:mm') : '');
                       setIsTableModalOpen(false);
                     }} 
                     class="bi bi-pencil-square ActionItem"
