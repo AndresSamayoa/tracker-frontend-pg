@@ -251,7 +251,7 @@ export default function WorkflowScreen() {
                 setTableData={setTableData}
                 searchData={searchData}
 
-                placeHolder='Nombre o CUI de paciente o medico'
+                placeHolder='Nombre del flujo'
                 tableColumns={tableColumns}
                 tableData={tableData}
             />

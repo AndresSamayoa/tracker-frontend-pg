@@ -45,9 +45,6 @@ export default function OrdersCrudScreen() {
       if (!workflow) {
         errores.push("El flujo es un campo obligatorio.");
       }
-      if (contacts.length < 1) {
-        errores.push("Debe seleccionar al menos un contacto.");
-      }
 
       if (errores.length > 0) {
         let mensajeError = errores.join(" ");
