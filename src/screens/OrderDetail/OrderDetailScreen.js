@@ -353,7 +353,7 @@ export default function OrderDetailScreen() {
           });
         }
 
-        for (const contact of response.data.contacts) {
+        for (const contact of response.data.contacts || []) {
           contactsTemp.push({
             names: contact.names,
             email: contact.email,
