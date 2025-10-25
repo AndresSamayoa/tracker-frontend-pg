@@ -132,9 +132,9 @@ export default function ReportScreen() {
                 series={[
                   {
                     data: [
-                      { id: 0, value: row.average_steps, label: '% de pasos correctos' },
-                      { id: 1, value: row.average_delays, label: '% de atrasos' },
-                      { id: 2, value: row.average_errors, label: '% de errores' },
+                      { id: 0, value: row.average_steps, label: `${Number(row.average_steps).toFixed(2)}% de pasos correctos` },
+                      { id: 1, value: row.average_delays, label: `${Number(row.average_delays).toFixed(2)}% de atrasos` },
+                      { id: 2, value: row.average_errors, label: `${Number(row.average_errors).toFixed(2)}% de errores` },
                     ],
                   },
                 ]}
@@ -233,9 +233,9 @@ export default function ReportScreen() {
             average_time_step: Number(row.average_time_step).toFixed(4) + ' h',
             average_time_delay: Number(row.average_time_delay).toFixed(4) + ' h',
             average_time_errors: Number(row.average_time_errors).toFixed(4) + ' h',
-            average_steps: Number(row.average_steps).toFixed(4) + ' por orden',
-            average_delays: Number(row.average_delays).toFixed(4) + ' por paso',
-            average_errors: Number(row.average_errors).toFixed(4) + ' por paso',
+            average_steps: Number(row.average_steps).toFixed(4) + ' %',
+            average_delays: Number(row.average_delays).toFixed(4) + ' %',
+            average_errors: Number(row.average_errors).toFixed(4) + ' %',
           });
           pies.push(<>
             <div className="chartContainer">
@@ -244,9 +244,9 @@ export default function ReportScreen() {
                 series={[
                   {
                     data: [
-                      { id: 0, value: row.average_steps, label: '% de pasos correctos' },
-                      { id: 1, value: row.average_delays, label: '% de atrasos' },
-                      { id: 2, value: row.average_errors, label: '% de errores' },
+                      { id: 0, value: row.average_steps, label: `${Number(row.average_steps || 0).toFixed(2)}% de pasos correctos` },
+                      { id: 1, value: row.average_delays, label: `${Number(row.average_delays || 0).toFixed(2)}% de atrasos` },
+                      { id: 2, value: row.average_errors, label: `${Number(row.average_errors || 0).toFixed(2)}% de errores` },
                     ],
                   },
                 ]}
